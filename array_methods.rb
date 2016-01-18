@@ -40,4 +40,17 @@ class Array
       self.to_enum
     end
   end
+
+  def my_map &block
+    if block_given?
+      elms = []
+      self.each {|x| elms << block.call(x)}
+      elms
+    else
+      self.to_enum
+    end
+  end
+
+  def my_reduce initial, sym, &block
+  end
 end

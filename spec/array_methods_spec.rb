@@ -71,5 +71,43 @@ describe "Array methods" do
 
   end
 
+  context "map" do
+    it "return elements multiplied by 4" do
+      expect(subject.my_map{|x| x * 4}).to eq(subject.map{|x| x * 4})
+    end
 
+    it "return Enumerator if no block is given" do
+      expect(subject.my_map.class).to eq subject.map.class
+    end
+  end
+
+  context "reduce" do
+    it "return sum of the elements" do
+      expect(subject.my_reduce(:+)).to eq subject.reduce(:+)
+    end
+
+    it "return sum plus 1 of the elements" do
+      expect(subject.my_reduce(1, :+)).to eq subject.reduce(1, :+)
+    end
+
+  end
 end
+
+
+=begin
+reduce(initial, sym) → obj
+reduce(sym) → obj
+reduce(initial) { |memo, obj| block } → obj
+reduce { |memo, obj| block } → obj
+Combines all elements of enum by applying a binary operation,
+specified by a block or a symbol that names a method or operator.
+
+If you specify a block, then for each element in enum the block is
+passed an accumulator value (memo) and the element. If you specify a
+symbol instead, then each element in the collection will be passed to the
+named method of memo. In either case, the result becomes the new value for memo.
+ At the end of the iteration, the final value of memo is the return value for the method.
+
+If you do not explicitly specify an initial value for memo, then the first
+element of collection is used as the initial value of memo.
+=end
