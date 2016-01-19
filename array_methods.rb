@@ -51,6 +51,28 @@ class Array
     end
   end
 
-  def my_reduce initial, sym, &block
+  def my_reduce *args, &block
+    case args.length
+      when 0
+        if block_given?
+          memo = self[0]
+          self.each_index {|i| memo = block.call(memo, self[i]) unless i == 0}
+          memo
+        end
+      when 1
+        if block_given?
+          memo = args[0]
+          self.each_index {|i| memo = block.call(memo, self[i])}
+          memo
+        else
+          res = self[0]
+          self.each_index{|i| res = res.send(args[0], self[i]) unless i == 0 }
+          res
+        end
+      when 2
+        res = args[0]
+        self.each_index{|i| res = res.send(args[1], self[i]) }
+        res
+    end
   end
 end

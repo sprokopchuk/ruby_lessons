@@ -86,10 +86,17 @@ describe "Array methods" do
       expect(subject.my_reduce(:+)).to eq subject.reduce(:+)
     end
 
-    it "return sum plus 1 of the elements" do
+    it "return sum of the elements with initial value 1" do
       expect(subject.my_reduce(1, :+)).to eq subject.reduce(1, :+)
     end
 
+    it "return memo value if block is passed" do
+      expect(subject.my_reduce{|memo, obj| memo *= obj}).to eq subject.reduce{|memo, obj| memo *= obj}
+    end
+
+    it "return memo with initial value is 2 if block is passed" do
+      expect(subject.my_reduce(2){|memo, obj| memo *= obj}).to eq subject.reduce(2){|memo, obj| memo *= obj}
+    end
   end
 end
 
