@@ -7,28 +7,24 @@ class Array
     size
   end
 
-  def my_any? &block
-    if block_given?
-      self.each do |x|
-        return block.call x
-      end
-    else
-      self.length > 0 ? true : false
+  def my_any?
+    res = false
+    self.each do |x|
+      res ||= yield x
     end
+    res
   end
 
-  def my_all? &block
-    if block_given?
-      res = true
-      self.each do |x|
-        res &&=  block.call x
+  def my_all?
+    res = true
+    self.each do |x|
+      if block_given?
+        res &&=  yield x
+      else
+        res &&= false unless x
       end
-      res
-    elsif self.length > 0
-      self.each{ |x| return false if x }
-    else
-      true
     end
+    res
   end
 
   def my_select &block
